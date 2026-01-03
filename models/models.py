@@ -1,10 +1,14 @@
 from sqlalchemy import Column, String, Text, DateTime, ForeignKey, func
+import uuid
 from database.database import Base
+
+def generateUUID():
+    return str(uuid.uuid4())
 
 class Categories(Base):
     __tablename__ = 'categories'
 
-    id = Column(String(128), primary_key=True, index=True, nullable=False)
+    id = Column(String(128), primary_key=True, index=True, nullable=False, default=generateUUID())
     name = Column(String(50), unique=True, nullable=False)
 
 class Tags(Base):
@@ -50,23 +54,23 @@ class PostVideos(Base):
 class PostCategories(Base):
     __tablename__ = 'post_categories'
 
-    post_id = Column(String(128), ForeignKey('posts.id', ondelete=None, onupdate=None), nullable=False, index=True)
-    categories_id = Column(String(128), ForeignKey('categories.id', ondelete=None, onupdate=None), nullable=False, index=True)
+    post_id = Column(String(128), ForeignKey('posts.id', ondelete=None, onupdate=None), primary_key=True, nullable=False, index=True)
+    categories_id = Column(String(128), ForeignKey('categories.id', ondelete=None, onupdate=None), primary_key=True, nullable=False, index=True)
 
 class PostTags(Base):
     __tablename__ = 'post_tags'
 
-    post_id = Column(String(128), ForeignKey('posts.id', ondelete=None, onupdate=None), nullable=False, index=True)
-    tags_id = Column(String(128), ForeignKey('tags.id', ondelete=None, onupdate=None), nullable=False, index=True)
+    post_id = Column(String(128), ForeignKey('posts.id', ondelete=None, onupdate=None), primary_key=True, nullable=False, index=True)
+    tags_id = Column(String(128), ForeignKey('tags.id', ondelete=None, onupdate=None), primary_key=True, nullable=False, index=True)
 
 class ArticleCategories(Base):
     __tablename__ = 'article_categories'
 
-    article_id = Column(String(128), ForeignKey('articles.id', ondelete=None, onupdate=None), nullable=False, index=True)
-    categories_id = Column(String(128), ForeignKey('categories.id', ondelete=None, onupdate=None), nullable=False, index=True)
+    article_id = Column(String(128), ForeignKey('articles.id', ondelete=None, onupdate=None), primary_key=True, nullable=False, index=True)
+    categories_id = Column(String(128), ForeignKey('categories.id', ondelete=None, onupdate=None), primary_key=True, nullable=False, index=True)
 
 class ArticleTags(Base):
     __tablename__ = 'article_tags'
 
-    article_id = Column(String(128), ForeignKey('articles.id', ondelete=None, onupdate=None), nullable=False, index=True)
-    tags_id = Column(String(128), ForeignKey('tags.id', ondelete=None, onupdate=None), nullable=False, index=True)
+    article_id = Column(String(128), ForeignKey('articles.id', ondelete=None, onupdate=None), primary_key=True, nullable=False, index=True)
+    tags_id = Column(String(128), ForeignKey('tags.id', ondelete=None, onupdate=None), primary_key=True, nullable=False, index=True)
