@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from app.database import Base, engine, get_db
 from app.models import Patient
-from app.Schema import PatientCreate, PatientUpdate, PatientResponse
+from app.schemas.Schema import PatientCreate, PatientUpdate, PatientResponse
 
 
 Base.metadata.create_all(bind=engine)
