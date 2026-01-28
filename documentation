@@ -1,0 +1,11 @@
+# 1. Install: pip install -r requirements.txt
+# 2. Start PostgreSQL + create DB
+# 3. Run: uvicorn app.main:app --reload
+# 4. Test: pytest tests/test_api.py -v
+# 5. Docs: http://localhost:8000/docs
+
+
+
+
+
+
