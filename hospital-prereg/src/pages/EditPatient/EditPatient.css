@@ -1,0 +1,75 @@
+/* EditPatient.css */
+
+/* Material Icons styling */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Custom form input focus styles */
+.form-input:focus {
+    outline: none;
+    border-color: #137fec;
+    box-shadow: 0 0 0 3px rgba(19, 127, 236, 0.1);
+}
+
+/* Form input styling for consistency */
+input, select, textarea {
+    transition: all 0.2s ease-in-out;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: #137fec;
+}
+
+/* Button hover effects */
+button[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(19, 127, 236, 0.3);
+}
+
+button[type="button"]:hover {
+    background-color: #e7edf3;
+}
+
+/* Dark mode specific styles */
+.dark input,
+.dark select,
+.dark textarea {
+    background-color: #334155;
+    border-color: #475569;
+    color: #f8fafc;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+    border-color: #137fec;
+    box-shadow: 0 0 0 3px rgba(19, 127, 236, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .layout-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .form-container {
+        padding: 1.5rem !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .header, .footer, button {
+        display: none;
+    }
+    
+    .form-container {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+}
