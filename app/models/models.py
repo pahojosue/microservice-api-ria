@@ -10,21 +10,16 @@ class Patient(Base):
 
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
-    gender = Column(Enum("Male", "Female", "Other"), nullable=False)
+    gender = Column(Enum("Male", "Female"), nullable=False)
     date_of_birth = Column(Date, nullable=False)
-    age = Column(Integer, nullable=False),
 
     phone = Column(String(20))
     address = Column(Text)
 
     emergency_contact_name = Column(String(150))
     emergency_contact_phone = Column(String(20))
-    
-
+    insurance_company_phone = Column(String(20))
+    patient_status = Column(String(20))
     created_at = Column(TIMESTAMP, server_default=func.now())
-    updated_at = Column(
-        TIMESTAMP,
-        server_default=func.now(),
-        onupdate=func.now()
-
-    )
+    updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
+    status = Column(Enum("Active", "Inactive"), default="Active", nullable=False)
