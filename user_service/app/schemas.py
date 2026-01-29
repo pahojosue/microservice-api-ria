@@ -5,6 +5,10 @@ class UserCreate(BaseModel):
     password: str
     role: str   # NEW
 
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
 class UserResponse(BaseModel):
     id: int
     email: str

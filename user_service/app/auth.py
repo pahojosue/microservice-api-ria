@@ -4,6 +4,7 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+import hashlib
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
 SECRET_KEY = "ria_microservice_user_service_secret_2026"
 if not SECRET_KEY:
@@ -11,7 +12,7 @@ if not SECRET_KEY:
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-pwd_context = CryptContext(schemes=["bcrypt"])
+pwd_context = CryptContext(schemes=["scrypt"], deprecated="auto")
 
 
 def hash_password(password: str):

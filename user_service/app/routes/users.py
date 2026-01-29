@@ -17,13 +17,17 @@ def get_db():
 # REGISTER USER
 @router.post("/register", response_model=schemas.UserResponse, status_code=201)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = 
-    existing = db.query(models.User).filter(models.User.email == user.email).first()
+    db_user = models.User(**user.model_dump())
+    existing = db.query(models.User).filter(models.User.email == db_user.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
 
-    hashed_password = auth.hash_password(user.password)
-    new_user = models.User(**user.model_dump())
+    hashed_password = auth.hash_password(db_user.password)
+    new_user = models.User(
+        email=db_user.email,
+        password=hashed_password,
+        role=db_user.role
+    )
 
     db.add(new_user)
     db.commit()
@@ -32,13 +36,14 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 # LOGIN USER
 @router.post("/login")
-def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = db.query(models.User).filter(models.User.email == user.email).first()
-    if not db_user or not auth.verify_password(user.password, db_user.password):
+def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
+    db_user = models.User(**user.model_dump())
+    existing = db.query(models.User).filter(models.User.email == db_user.email).first()
+    if not existing or not auth.verify_password(db_user.password, existing.password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    token = auth.create_access_token({"sub": db_user.email, "role": db_user.role})
-    return {"access_token": token, "token_type": "bearer"}
+    token = auth.create_access_token({"sub": existing.email, "role": existing.role})
+    return {"access_token": token}
 
 
 # VALIDATE TOKEN FOR OTHER SERVICES
