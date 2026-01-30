@@ -10,6 +10,8 @@ import MedicalContent from "./pages/MedicalContent/MedicalContent";
 import MedicalDetails from "./pages/MedicalDetails/MedicalDetails";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Unauthorized from "./pages/Unauthorized/Unauthorized";
+import NotFound from "./pages/NotFound/NotFound";
+import DoctorDashboard from "./pages/DoctorDashboard/DoctorDashboard";
 
 function App() {
 
@@ -19,8 +21,6 @@ function App() {
         {/* Public Routes */}
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/" element={<PatientDashBoard />}></Route>
-        <Route path="/home" element={<PatientDashBoard />}></Route>
         <Route path="/patient-profile" element={<PatientProfile />}></Route>
         <Route path="/edit-profile" element={<EditPatient />}></Route>
         <Route path="/appointments" element={<AppointmentList />}></Route>
@@ -29,9 +29,21 @@ function App() {
         <Route path="/medical-details" element={<MedicalDetails />}></Route>
         <Route path="/unauthorized" element={<Unauthorized />}></Route>
 
-        {/* Protected Routes */}
+        {/* Patient Protected Routes */}
         <Route element={<ProtectedRoutes roleProps={"patient"} />}>
+          <Route path="/" element={<PatientDashBoard />}></Route>
+          <Route path="/home" element={<PatientDashBoard />}></Route>
         </Route>
+
+        {/* Doctor Protected Routes */}
+        <Route element={<ProtectedRoutes roleProps={"doctor"} />}>
+          <Route path="/" element={<PatientDashBoard />}></Route>
+          <Route path="/home" element={<PatientDashBoard />}></Route>
+          <Route path="/doctor-home" element={<DoctorDashboard />}></Route>
+        </Route>
+
+        {/* Catch All route */}
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </main>
   )
